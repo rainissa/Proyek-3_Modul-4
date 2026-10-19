@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\PesananController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 // Publik: daftar barang boleh dilihat tanpa login
@@ -32,4 +33,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan.index');
     Route::get('/pesanan/{id}', [PesananController::class, 'show'])->name('pesanan.show');
+
+    Route::get('/admin/users', [RoleController::class, 'index'])
+        ->middleware('can:manage-roles')
+        ->name('admin.users.index');
+    Route::patch('/admin/users/{user}/role', [RoleController::class, 'update'])
+        ->middleware('can:manage-roles')
+        ->name('admin.users.role.update');
 });
