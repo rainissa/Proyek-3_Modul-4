@@ -11,7 +11,7 @@ use Illuminate\View\View;
 class RoleController extends Controller
 {
     public function index(): View {
-        return view('admin.user', ['user' => User::orderBy('username')->get()]);
+        return view('admin.users', ['users' => User::orderBy('username')->get()]);
     }
     public function update(
         ChangeRoleRequest $request,
